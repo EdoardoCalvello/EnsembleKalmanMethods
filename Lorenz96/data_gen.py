@@ -155,7 +155,7 @@ states[:,0] = z0
 for n in range(its-1):
 
     Psi_state = scint.solve_ivp(
-    l96m.regressed,
+    l96m,
     [0,TAU],
     states[:,n],
     method = 'RK45',
