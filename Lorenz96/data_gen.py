@@ -161,12 +161,41 @@ for n in range(its-1):
     method = 'RK45',
     max_step = TAU)
     
-    states[:,n+1] = Psi_state.y[:,-1] + np.random.normal(0,sigma,size=(Psi_state.y).shape[0])
+    states[:,n+1] = Psi_state.y[:,-1] + np.random.normal(0,sigma_small,size=(Psi_state.y).shape[0])
 
     obs[:,n+1] = np.array([states[0,n+1],states[1,n+1],states[3,n+1],states[4,n+1],states[6,n+1],states[7,n+1]]) \
-        + np.random.normal(0,gamma,size=6)
+        + np.random.normal(0,gamma_small,size=6)
 
 #save the x and y in a single npy file with labels states and observations respectively
 
 np.savez('simulation_data_multiscale_001.npz', states=states, observations=obs)
+
+
+################################################################################
+# Generate Data for Inversion Experiment #######################################
+################################################################################
     
+#data generation
+ITS = np.arange(0,T_dyn,TAU).shape[0]
+
+x = np.zeros((l96m.K, np.arange(0,T_dyn,TAU).shape[0]))
+x[:,0] = z0[:l96m.K]
+
+#First generate the true data
+for n in range(ITS-1):
+
+    Psix = scint.solve_ivp(
+    l96m.regressed,
+    [0,TAU],
+    x[:,n],
+    method = 'RK45',
+    max_step = TAU)
+    
+    x[:,n+1] = Psix.y[:,-1]
+
+mm = (1/9)*((1/ITS)*x.sum(axis=1)).sum(axis=0)
+mv = (1/9)*(np.var(x,axis=1)).sum(axis=0)
+
+w = np.array([mm,mv]) + np.random.normal(0,gamma_small,size=2)
+
+np.savez('simulation_data_singlescale_inversion.npz', states=x, observation=w)
