@@ -25,8 +25,11 @@ T_learn = 300 # time to gather training data for GP
 T_dyn = 50
 TAU = 0.001
 
-gamma = 0.001
-sigma = 0.001
+gamma_small = 0.001
+sigma_small = 0.001
+
+gamma_large = 0.1
+sigma_large = 0.1
 
 dt = 0.001 # maximum step size
 dt_conv = 0.01 # maximum step size for converging to attractor
@@ -75,10 +78,6 @@ da_tools.set_pairs(l96m.gather_pairs(sol_learn.y))
 #GET m
 da_tools.learn_gpr()
 
-################################################################################
-# IC section ###################################################################
-###############################################################################
-
 #set m
 da_tools = DATools(mem_thrsh = 800)
 gp = load('closure.joblib')
@@ -88,7 +87,7 @@ l96m.set_predictor(da_tools.get_gpr())
 
 
 ################################################################################
-# Run Single Scale Dynamics ####################################################
+# Run Single Scale Dynamics with gamma/sigma small##############################
 ################################################################################
 
 states = np.zeros((l96m.K, np.arange(0,T_dyn,TAU).shape[0]))
@@ -106,14 +105,42 @@ for n in range(its-1):
     method = 'RK45',
     max_step = TAU)
     
-    states[:,n+1] = Psi_state.y[:,-1] + np.random.normal(0,sigma,size=(Psi_state.y).shape[0])
+    states[:,n+1] = Psi_state.y[:,-1] + np.random.normal(0,sigma_small,size=(Psi_state.y).shape[0])
 
     obs[:,n+1] = np.array([states[0,n+1],states[1,n+1],states[3,n+1],states[4,n+1],states[6,n+1],states[7,n+1]]) \
-        + np.random.normal(0,gamma,size=6)
+        + np.random.normal(0,gamma_small,size=6)
 
 #save the x and y in a single npy file with labels states and observations respectively
 
 np.savez('simulation_data_singlescale_001.npz', states=states, observations=obs)
+
+################################################################################
+# Run Single Scale Dynamics with gamma/sigma large##############################
+################################################################################
+
+states = np.zeros((l96m.K, np.arange(0,T_dyn,TAU).shape[0]))
+its = states.shape[1]
+obs = np.zeros((6, np.arange(0,T_dyn,TAU).shape[0]))
+states[:,0] = z0[:l96m.K]
+
+#First generate the true states and the true data
+for n in range(its-1):
+
+    Psi_state = scint.solve_ivp(
+    l96m.regressed,
+    [0,TAU],
+    states[:,n],
+    method = 'RK45',
+    max_step = TAU)
+    
+    states[:,n+1] = Psi_state.y[:,-1] + np.random.normal(0,sigma_large,size=(Psi_state.y).shape[0])
+
+    obs[:,n+1] = np.array([states[0,n+1],states[1,n+1],states[3,n+1],states[4,n+1],states[6,n+1],states[7,n+1]]) \
+        + np.random.normal(0,gamma_large,size=6)
+
+#save the x and y in a single npy file with labels states and observations respectively
+
+np.savez('simulation_data_singlescale_1.npz', states=states, observations=obs)
 
 ################################################################################
 # Run Multi-Scale Dynamics #####################################################
