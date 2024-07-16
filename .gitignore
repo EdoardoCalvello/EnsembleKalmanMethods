@@ -1,7 +1,7 @@
-.png
-.joblib
-.npy
-.npz
+*.png
+*.joblib
+*.npy
+*.npz
 
 
 # Byte-compiled / optimized / DLL files
