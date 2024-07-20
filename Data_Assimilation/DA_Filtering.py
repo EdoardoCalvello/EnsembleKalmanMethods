@@ -68,7 +68,7 @@ class ThreeDVAR:
         predicted_states = np.zeros((ic.shape[0], its+1))
         predicted_states[:,0] = ic
 
-        for n in range(its):
+        for n in range(its-1):
             y_observed = observations[:,n+1]
             predicted_states[:,n+1] = self.analysis(self.forecast(predicted_states[:,n]), y_observed)
         return predicted_states
@@ -161,7 +161,7 @@ class EnKF:
         predicted_states = np.zeros((ic.shape[0],self.J,its+1))
         predicted_states[:,:,0] = ic
 
-        for n in range(its):
+        for n in range(its-1):
             y_observed = observations[:,n+1]
             predicted_states[:,:,n+1] = self.analysis(self.forecast(predicted_states[:,:,n]), y_observed)
         return predicted_states

@@ -54,13 +54,25 @@ class observation_operator:
         return self.H @ v
     
 
+#Load the observations and underlying true states
+truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+true_states = truth['states']
+true_observations = truth['observations'][:,:10000]
+
+
+##############################################################################
+##############################################################################
+##########         Run Experiments with 100 ensemble members        ##########
+##############################################################################
+##############################################################################
+
 #Set the inter-observation time
 TAU = 0.001
 #Set the model and observation noise
 sigma = 0.001
 gamma = 0.001
 #Set the ensemble size
-J=2
+J=100
 #initialize the data assimilation method
 enkf = EnKF(Psi(TAU), 
             observation_operator(), 
@@ -68,13 +80,26 @@ enkf = EnKF(Psi(TAU),
             gamma, 
             ensemble_size = J)
 
-#Load the observations and underlying true states
+#set initial condition for the data assimilation scheme
+initial_condition = np.random.normal(10,10,size=(l96m.K,J))
+#Run the data assimilation scheme
+predicted_states =  enkf.run(true_observations, initial_condition)
+np.savez('./results/EnKF'+'%s' %J + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
 
-truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
-true_states = truth['states']
-true_observations = truth['observations']
+##############################################################################
+##############################################################################
+##########        Run Experiments with 1000 ensemble members        ##########
+##############################################################################
+##############################################################################
 
-import pdb; pdb.set_trace()
+#Set the ensemble size
+J=1000
+#initialize the data assimilation method
+enkf = EnKF(Psi(TAU), 
+            observation_operator(), 
+            sigma, 
+            gamma, 
+            ensemble_size = J)
 
 #set initial condition for the data assimilation scheme
 initial_condition = np.random.normal(10,10,size=(l96m.K,J))
