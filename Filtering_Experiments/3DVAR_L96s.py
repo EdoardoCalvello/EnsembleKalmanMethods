@@ -63,6 +63,13 @@ K[4,3] = 1
 K[6,4] = 1
 K[7,5] = 1
 
+
+##############################################################################
+##############################################################################
+##########      Run Experiments with inter-observation time 0.001   ##########
+##############################################################################
+##############################################################################
+
 #Set the inter-observation time
 TAU = 0.001
 #initialize the data assimilation method
@@ -78,4 +85,64 @@ true_observations = truth['observations']
 initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
-np.savez('./results/3DVAR_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+
+
+### Experiment with larger noise level ###
+
+
+#Load the observations and underlying true states
+truth = np.load('../Lorenz96/simulation_data_singlescale_1.npz')
+true_states = truth['states']
+true_observations = truth['observations']
+#Run the data assimilation scheme
+predicted_states =  threeDVAR.run(true_observations, initial_condition)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
+
+
+
+##############################################################################
+##############################################################################
+##########      Run Experiments with inter-observation time 0.5     ##########
+##############################################################################
+##############################################################################
+
+#Set the inter-observation time
+TAU = 0.5
+#initialize the data assimilation method
+threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
+
+#Load the observations and underlying true states
+
+truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+true_states = truth['states']
+true_observations = truth['observations']
+
+#set initial condition for the data assimilation scheme
+initial_condition = 10*np.ones(l96m.K)
+#Run the data assimilation scheme
+predicted_states =  threeDVAR.run(true_observations, initial_condition)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+
+##############################################################################
+##############################################################################
+##########      Run Experiments with inter-observation time 0.5     ##########
+##############################################################################
+##############################################################################
+
+#Set the inter-observation time
+TAU = 1
+#initialize the data assimilation method
+threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
+
+#Load the observations and underlying true states
+
+truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+true_states = truth['states']
+true_observations = truth['observations']
+
+#set initial condition for the data assimilation scheme
+initial_condition = 10*np.ones(l96m.K)
+#Run the data assimilation scheme
+predicted_states =  threeDVAR.run(true_observations, initial_condition)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
