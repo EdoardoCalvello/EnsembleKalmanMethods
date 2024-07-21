@@ -55,7 +55,7 @@ class observation_operator:
     
 
 #Load the observations and underlying true states
-truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+truth = np.load('../Lorenz96/simulation_data_singlescale_1.npz')
 true_states = truth['states']
 true_observations = truth['observations'][:,:10000]
 
@@ -84,7 +84,7 @@ enkf = EnKF(Psi(TAU),
 initial_condition = np.random.normal(10,10,size=(l96m.K,J))
 #Run the data assimilation scheme
 predicted_states =  enkf.run(true_observations, initial_condition)
-np.savez('./results/EnKF'+'%s' %J + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+np.savez('./results/EnKF'+'%s' %J + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
 
 ##############################################################################
 ##############################################################################
@@ -105,4 +105,4 @@ enkf = EnKF(Psi(TAU),
 initial_condition = np.random.normal(10,10,size=(l96m.K,J))
 #Run the data assimilation scheme
 predicted_states =  enkf.run(true_observations, initial_condition)
-np.savez('./results/EnKF'+'%s' %J + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+np.savez('./results/EnKF'+'%s' %J + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
