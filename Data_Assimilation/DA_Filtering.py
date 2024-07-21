@@ -2,7 +2,7 @@ import numpy as np
 
 class ThreeDVAR:
 
-    def __init__(self, forward_operator, observation_operator, gain, noisy3DVAR=False):
+    def __init__(self, forward_operator, observation_operator, gain, noisy3DVAR=False, sigma=None, gamma=None):
         """
         Initialize the 3DVAR class.
         
@@ -18,6 +18,9 @@ class ThreeDVAR:
         self.observation_function = observation_operator
         self.K = gain
         self.noisy3DVAR = noisy3DVAR
+        self.sigma = sigma
+        self.gamma = gamma
+        
 
     def forecast(self, v):
         """
@@ -43,9 +46,13 @@ class ThreeDVAR:
         Returns:
         - x_analysis: np.array, analysis state vector
         """
-        
+        if self.noisy3DVAR:
+            v_hat = v_hat + np.random.normal(0,self.sigma,size=v_hat.shape)
+            y_hat = self.observation_function.forward(v_hat) + np.random.normal(0,self.gamma,size=y_observed.shape)
+        else:
+            y_hat = self.observation_function.forward(v_hat)
         # Innovation
-        innovation = y_observed - self.observation_function.forward(v_hat)
+        innovation = y_observed - y_hat
         
         # Analysis step
         v = v_hat + self.K @ innovation

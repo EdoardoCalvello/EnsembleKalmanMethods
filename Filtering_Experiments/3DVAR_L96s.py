@@ -146,3 +146,27 @@ initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
 np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+
+
+##############################################################################
+##############################################################################
+##################        Run Noisy 3DVAR Experiment        ##################
+##############################################################################
+##############################################################################
+
+#Set the inter-observation time
+TAU = 1
+#initialize the data assimilation method
+threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K, noisy3DVAR = True, sigma = 0.1, gamma = 0.1)
+
+#Load the observations and underlying true states
+
+truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+true_states = truth['states']
+true_observations = truth['observations']
+
+#set initial condition for the data assimilation scheme
+initial_condition = 10*np.ones(l96m.K)
+#Run the data assimilation scheme
+predicted_states =  threeDVAR.run(true_observations, initial_condition)
+np.savez('./results/noisy3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
