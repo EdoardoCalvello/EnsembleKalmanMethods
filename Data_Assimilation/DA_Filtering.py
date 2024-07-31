@@ -106,7 +106,7 @@ class EnKF:
         Chh = np.cov(h)
         first_dim, second_dim = v.shape[0], h.shape[0]
         Cvh = np.cov(v, h)[:first_dim, -second_dim:]
-        Gamma = self.gamma * np.eye(second_dim)
+        Gamma = (self.gamma**2) * np.eye(second_dim)
         return Cvh@np.linalg.solve((Chh + Gamma), innovation)
 
     def forecast(self, v):

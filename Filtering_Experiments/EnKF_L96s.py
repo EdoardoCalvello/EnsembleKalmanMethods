@@ -68,11 +68,11 @@ true_observations = truth['observations'][:,:10000]
 
 #Set the inter-observation time
 TAU = 0.001
-#Set the model and observation noise
-sigma = 0.001
-gamma = 0.001
+#Set the model and observation noise std deviations
+sigma = 0.1
+gamma = 0.1
 #Set the ensemble size
-J=100
+J=1000
 #initialize the data assimilation method
 enkf = EnKF(Psi(TAU), 
             observation_operator(), 
