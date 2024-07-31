@@ -9,6 +9,12 @@ from Data_Assimilation.DA_Filtering import ThreeDVAR
 from joblib import load
 from time import perf_counter as timer
 
+
+
+'''
+#todo - interobservation time 0.001 vs other tau business
+'''
+
 #initialize Lorenz `96 dynamical system
 l96m = L96M()
 #set the learned closure m
@@ -100,7 +106,6 @@ predicted_states =  threeDVAR.run(true_observations, initial_condition)
 np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
 
 
-
 ##############################################################################
 ##############################################################################
 ##########      Run Experiments with inter-observation time 0.5     ##########
@@ -116,7 +121,8 @@ threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
 
 truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
 true_states = truth['states']
-true_observations = truth['observations']
+skip_len = int(TAU/0.001)
+true_observations = truth['observations'][:,::skip_len]
 
 #set initial condition for the data assimilation scheme
 initial_condition = 10*np.ones(l96m.K)
@@ -126,7 +132,7 @@ np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001
 
 ##############################################################################
 ##############################################################################
-##########      Run Experiments with inter-observation time 0.5     ##########
+##########       Run Experiments with inter-observation time 1      ##########
 ##############################################################################
 ##############################################################################
 
@@ -139,13 +145,16 @@ threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
 
 truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
 true_states = truth['states']
-true_observations = truth['observations']
+#note that the true integration time is 0.001
+skip_len = int(TAU/0.001)
+true_observations = truth['observations'][:,::skip_len]
 
 #set initial condition for the data assimilation scheme
 initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
 np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+
 
 
 ##############################################################################
@@ -155,13 +164,13 @@ np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001
 ##############################################################################
 
 #Set the inter-observation time
-TAU = 1
+TAU = 0.001
 #initialize the data assimilation method
 threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K, noisy3DVAR = True, sigma = 0.1, gamma = 0.1)
 
 #Load the observations and underlying true states
 
-truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+truth = np.load('../Lorenz96/simulation_data_singlescale_1.npz')
 true_states = truth['states']
 true_observations = truth['observations']
 
@@ -169,4 +178,5 @@ true_observations = truth['observations']
 initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
-np.savez('./results/noisy3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
+np.savez('./results/noisy3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
+

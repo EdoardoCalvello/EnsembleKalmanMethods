@@ -174,9 +174,10 @@ np.savez('simulation_data_multiscale_001.npz', states=states, observations=obs)
 ################################################################################
 # Generate Data for Inversion Experiment #######################################
 ################################################################################
-    
+
+T_inv = 10
 #data generation
-ITS = np.arange(0,T_dyn,TAU).shape[0]
+ITS = np.arange(0,T_inv,TAU).shape[0]
 
 x = np.zeros((l96m.K, np.arange(0,T_dyn,TAU).shape[0]))
 x[:,0] = z0[:l96m.K]
