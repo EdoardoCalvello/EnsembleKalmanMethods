@@ -28,7 +28,7 @@ class Psi:
     def forward(self, v):
 
         v = scint.solve_ivp(
-        l96m,
+        l96m.regressed,
         [0,self.TAU],
         v,
         method = 'RK45',
@@ -70,7 +70,7 @@ threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
 
 #Load the observations and underlying true states
 
-truth = np.load('../Lorenz96/simulation_data_singlescale_001.npz')
+truth = np.load('../Lorenz96/simulation_data_multiscale_001.npz')
 true_states = truth['states']
 true_observations = truth['observations']
 
@@ -78,4 +78,29 @@ true_observations = truth['observations']
 initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
-np.savez('./results/3DVAR_predicted_observations_multiscale_001.npz', prediction=predicted_states)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_multiscale_001.npz', prediction=predicted_states)
+
+##############################################################################
+##############################################################################
+##########       Run Experiments with inter-observation time 1      ##########
+##############################################################################
+##############################################################################
+
+#Set the inter-observation time
+TAU = 1
+#initialize the data assimilation method
+threeDVAR = ThreeDVAR(Psi(TAU), observation_operator(), K)
+
+#Load the observations and underlying true states
+
+truth = np.load('../Lorenz96/simulation_data_multiscale_001.npz')
+true_states = truth['states']
+#note that the true integration time is 0.001
+skip_len = int(TAU/0.001)
+true_observations = truth['observations'][:,::skip_len]
+
+#set initial condition for the data assimilation scheme
+initial_condition = 10*np.ones(l96m.K)
+#Run the data assimilation scheme
+predicted_states =  threeDVAR.run(true_observations, initial_condition)
+np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_multiscale_001.npz', prediction=predicted_states)

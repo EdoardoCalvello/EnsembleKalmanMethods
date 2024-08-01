@@ -51,11 +51,29 @@ eki = EKI_transport(G(),
             dt, 
             ensemble_size = J,
             optimization=True,
-            its=100000)
+            its=1000000)
 
 #Run the data assimilation scheme
 predicted_states =  eki.run(observation, initial_condition)
 np.savez('./results/EKI_transport'+'%s' %dt + '_bayes_opt.npz', Bayes_sol=predicted_states[...,0], opt_sol=predicted_states[...,1])
+
+##############################################################################
+##############################################################################
+##########   Run Experiments with EKI transport (one step)   ################# 
+##############################################################################
+##############################################################################
+
+#Set dt
+dt = 1
+#initialize the data assimilation method
+eki = EKI_transport(G(), 
+            gamma,
+            dt, 
+            ensemble_size = J)
+
+#Run the data assimilation scheme
+predicted_states =  eki.run(observation, initial_condition)
+np.savez('./results/EKI_transport'+'%s' %dt + '_bayes_opt.npz', Bayes_sol=predicted_states)
 
 ##############################################################################
 ##############################################################################

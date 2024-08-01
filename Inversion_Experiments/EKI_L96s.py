@@ -51,8 +51,8 @@ class G:
                 x_hat[:,k+1] = Psi.y[:,-1]
 
 
-            mm = (1/9)*((1/(self.its-100))*x_hat[:,100:].sum(axis=1)).sum(axis=0)
-            mv = (1/9)*(np.var(x_hat[:,100:],axis=1)).sum(axis=0)
+            mm = (1/9)*((1/(self.its-1000))*x_hat[:,1000:].sum(axis=1)).sum(axis=0)
+            mv = (1/9)*(np.var(x_hat[:,1000:],axis=1)).sum(axis=0)
 
             Gu[:,j] = np.array([mm,mv])
 
@@ -77,8 +77,8 @@ integration_its = np.arange(0,t,TAU).shape[0]
 #Data Assimilation Scheme Parameters
 
 #Set dt
-dt = 0.05
-gamma = 0.001
+dt = 1
+gamma = 0.1
 J = 30
 initial_condition = np.random.normal(0,10,size=(1,J))
 

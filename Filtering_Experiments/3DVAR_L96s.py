@@ -156,7 +156,6 @@ predicted_states =  threeDVAR.run(true_observations, initial_condition)
 np.savez('./results/3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_001.npz', prediction=predicted_states)
 
 
-
 ##############################################################################
 ##############################################################################
 ##################        Run Noisy 3DVAR Experiment        ##################
@@ -179,4 +178,3 @@ initial_condition = 10*np.ones(l96m.K)
 #Run the data assimilation scheme
 predicted_states =  threeDVAR.run(true_observations, initial_condition)
 np.savez('./results/noisy3DVAR_TAU%s' %TAU + '_predicted_observations_singlescale_1.npz', prediction=predicted_states)
-

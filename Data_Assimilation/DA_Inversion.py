@@ -90,7 +90,7 @@ class EKI_transport:
 
             EKI_sol = np.zeros((ic.shape[0],self.J,2))
 
-            for n in range(self.its-1):
+            for n in range(self.its):
                 EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
                 if int((n+1)*self.dt) == 1:
                     EKI_sol[...,0] = EKI_ensemble
@@ -102,7 +102,7 @@ class EKI_transport:
 
             EKI_sol = np.zeros((ic.shape[0],self.J))
 
-            for n in range(self.its-1):
+            for n in range(self.its):
                 EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
             EKI_sol = EKI_ensemble
 
@@ -188,7 +188,7 @@ class EKI_post:
         """
         EKI_ensemble = ic
 
-        for n in range(self.its-1):
+        for n in range(self.its):
             EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation_R)
 
         return EKI_ensemble

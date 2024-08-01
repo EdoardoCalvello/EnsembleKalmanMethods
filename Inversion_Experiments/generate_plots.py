@@ -4,11 +4,8 @@ import sys
 sys.path.append('../')
 import numpy as np
 import matplotlib.pyplot as plt
-from Inversion_Experiments.EKI_1D import G, G_R
 from scipy.integrate import quad
 from scipy.optimize import minimize
-
-
 
 #########################################################
 #########################################################
@@ -17,13 +14,18 @@ from scipy.optimize import minimize
 #########################################################
 
 EKI_transport = np.load('./results/EKI_transport0.00025_bayes_opt.npz')['Bayes_sol']
+EKI_transport_one = np.load('./results/EKI_transport1_bayes_opt.npz')['Bayes_sol']
 EKI_opt = np.load('./results/EKI_transport0.00025_bayes_opt.npz')['opt_sol']
 EKI_post = np.load('./results/EKI_post0.00025.npz')['Bayes_sol']
 
 w = 2
 gamma = 1
 
-G_func = G()
+
+def G(u):
+
+    return (7/12)*u**3 - (7/2)*u**2 + 8*u
+
 
 def prior(u):
 
@@ -31,11 +33,11 @@ def prior(u):
 
 def likelihood(u):
 
-    return (1/np.sqrt(2*np.pi*gamma))*np.exp(-0.5*(G_func.forward(u) - w)**2/gamma)
+    return (1/np.sqrt(2*np.pi*gamma))*np.exp(-0.5*(G(u) - w)**2/gamma)
 
 def priorXlikelihood(u):
 
-    return (1/(np.pi*(np.sqrt(2))))*np.exp(-(u+2)**2)*np.exp(-0.5*(G_func.forward(u) - w)**2/gamma)
+    return (1/(np.pi*(np.sqrt(2))))*np.exp(-(u+2)**2)*np.exp(-0.5*(G(u) - w)**2/gamma)
 
 normalization_constant, error = quad(priorXlikelihood, -1, 1, epsabs=1e-5, epsrel=1e-5)
 
@@ -54,7 +56,7 @@ print(MAP)
 
 def least_squares_func(u):
 
-    return 0.5*(w - G_func.forward(u))**2
+    return 0.5*(w - G(u))**2
 
 least_squares_min = minimize(least_squares_func, 0.0, bounds=[(-1, 1)])
 minimizer = least_squares_min.x[0]
@@ -79,7 +81,9 @@ axs[0].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labe
 
 #axs[1].hist(EKI_transport[0,:], weights=np.zeros_like(EKI_transport[0,:]) + 1. / EKI_transport[0,:].size, bins=30, color='lightgreen', label='EKI (Transport)')
 #axs[1].hist(EKI_opt[0,:], weights=np.zeros_like(EKI_opt[0,:]) + 1. / EKI_opt[0,:].size, bins=30, color='darkgreen', label='EKI (Iteration to Infinity)')
-axs[1].hist(EKI_transport[0,:], density=True, bins=30, color='green', label='EKI (Transport)')
+axs[1].set_ylim([0, 10])
+axs[1].hist(EKI_transport_one[0,:], density=True, bins=50, color='gray', label=r'EKI (Transport), $\Delta t=1$')
+axs[1].hist(EKI_transport[0,:], density=True, bins=30, color='green', label=r'EKI (Transport), $\Delta t=2.5\cdot 10^{-4}$')
 axs[1].hist(EKI_opt[0,:], density=True, bins=30, color='lightgreen', label='EKI (Iteration to Infinity)')
 axs[1].plot(x, posterior(x), 'k-', linewidth=4, label='Posterior')
 axs[1].axvline(minimizer, color='black', linestyle='--', linewidth=2, label='Minimizer of Least Squares Loss')
@@ -102,3 +106,17 @@ axs[2].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labe
 
 plt.tight_layout()
 fig.savefig('./plots/EKI_1D.png')
+
+
+
+'''
+#########################################################
+#########################################################
+#############         L96 Experiment        ############# 
+#########################################################
+#########################################################
+
+EKI_transport = np.load('./results/EKI_transport0.05_L96_bayes_opt.npz')['Bayes_sol']
+
+import pdb; pdb.set_trace()
+'''

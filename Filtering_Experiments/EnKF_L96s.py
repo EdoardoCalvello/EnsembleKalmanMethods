@@ -72,7 +72,7 @@ TAU = 0.001
 sigma = 0.1
 gamma = 0.1
 #Set the ensemble size
-J=1000
+J=100
 #initialize the data assimilation method
 enkf = EnKF(Psi(TAU), 
             observation_operator(), 

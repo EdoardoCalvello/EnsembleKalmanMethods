@@ -85,7 +85,7 @@ da_tools.set_gpr(gp)
 l96m.set_stencil()
 l96m.set_predictor(da_tools.get_gpr())
 
-
+'''
 ################################################################################
 # Run Single Scale Dynamics with gamma/sigma small##############################
 ################################################################################
@@ -170,12 +170,12 @@ for n in range(its-1):
 
 np.savez('simulation_data_multiscale_001.npz', states=states, observations=obs)
 
-
+'''
 ################################################################################
 # Generate Data for Inversion Experiment #######################################
 ################################################################################
 
-T_inv = 10
+T_inv = 100
 #data generation
 ITS = np.arange(0,T_inv,TAU).shape[0]
 
@@ -197,6 +197,6 @@ for n in range(ITS-1):
 mm = (1/9)*((1/ITS)*x.sum(axis=1)).sum(axis=0)
 mv = (1/9)*(np.var(x,axis=1)).sum(axis=0)
 
-w = np.array([mm,mv]) + np.random.normal(0,gamma_small,size=2)
+w = np.array([mm,mv])
 
 np.savez('simulation_data_singlescale_inversion.npz', states=x, observation=w)
