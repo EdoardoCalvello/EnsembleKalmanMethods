@@ -178,7 +178,7 @@ T_inv = 100
 #data generation
 ITS = np.arange(0,T_inv,TAU).shape[0]
 
-x = np.zeros((l96m.K, np.arange(0,T_dyn,TAU).shape[0]))
+x = np.zeros((l96m.K, np.arange(0,T_inv,TAU).shape[0]))
 x[:,0] = z0[:l96m.K]
 
 #First generate the true data
