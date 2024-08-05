@@ -13,6 +13,8 @@ from scipy.optimize import minimize
 #########################################################
 #########################################################
 
+
+
 EKI_transport = np.load('./results/EKI_transport0.00025_bayes_opt.npz')['Bayes_sol']
 EKI_transport_one = np.load('./results/EKI_transport1_bayes_opt.npz')['Bayes_sol']
 EKI_opt = np.load('./results/EKI_transport0.00025_bayes_opt.npz')['opt_sol']
@@ -109,14 +111,16 @@ fig.savefig('./plots/EKI_1D.png')
 
 
 
-'''
+
 #########################################################
 #########################################################
 #############         L96 Experiment        ############# 
 #########################################################
 #########################################################
 
+'''
 EKI_transport = np.load('./results/EKI_transport0.05_L96_bayes_opt.npz')['Bayes_sol']
-
+EKI_transport_one = np.load('./results/EKI_transport1_L96_bayes_opt.npz')['Bayes_sol']
+EKI_post = np.load('./results/EKI_transport0.05_L96_bayes_opt.npz')['Bayes_sol']
 import pdb; pdb.set_trace()
 '''

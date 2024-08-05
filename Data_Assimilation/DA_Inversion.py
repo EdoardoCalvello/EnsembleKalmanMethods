@@ -94,6 +94,7 @@ class EKI_transport:
                 EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
                 if int((n+1)*self.dt) == 1:
                     EKI_sol[...,0] = EKI_ensemble
+                print(np.mean(EKI_ensemble), flush=True)
             EKI_sol[...,1] = EKI_ensemble
 
             return EKI_sol
