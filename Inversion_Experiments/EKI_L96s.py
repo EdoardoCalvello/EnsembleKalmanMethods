@@ -102,12 +102,12 @@ eki = EKI_transport(G(TAU,t,integration_its),
             gamma,
             dt, 
             ensemble_size = J,
-            optimization=True,
-            its=40)
+            its=40,
+            save_its=True)
 
 #Run the data assimilation scheme
-predicted_states =  eki.run(observation, initial_condition)
-np.savez('./results/EKI_transport'+'%s' %dt + '_L96_bayes_opt.npz', Bayes_sol=predicted_states[...,0], opt_sol=predicted_states[...,1])
+predicted =  eki.run(observation, initial_condition)
+np.savez('./results/EKI_transport'+'%s' %dt + '_L96_bayes_opt.npz', sol=predicted)
 
 ##############################################################################
 ##############################################################################
@@ -132,11 +132,13 @@ initial_condition = np.random.normal(0,10,size=(1,J))
 eki = EKI_transport(G(TAU,t,integration_its), 
             gamma,
             dt, 
-            ensemble_size = J)
+            ensemble_size = J,
+            its=10,
+            save_its=True)
 
 #Run the data assimilation scheme
-predicted_states =  eki.run(observation, initial_condition)
-np.savez('./results/EKI_transport'+'%s' %dt + '_L96_bayes_one.npz', Bayes_sol=predicted_states)
+predicted =  eki.run(observation, initial_condition)
+np.savez('./results/EKI_transport'+'%s' %dt + '_L96_bayes_one.npz', sol=predicted)
 
 
 ##############################################################################
@@ -167,8 +169,9 @@ eki = EKI_post(G_R(TAU,t,integration_its),
             gamma_R,
             dt, 
             ensemble_size = J,
-            its=20)
+            its=20,
+            save_its=True)
 
 #Run the data assimilation scheme
-predicted_states =  eki.run(observation_R, initial_condition)
-np.savez('./results/EKI_post'+'%s' %dt + '_L96.npz', Bayes_sol=predicted_states)
+predicted =  eki.run(observation_R, initial_condition)
+np.savez('./results/EKI_post'+'%s' %dt + '_L96.npz', sol=predicted)

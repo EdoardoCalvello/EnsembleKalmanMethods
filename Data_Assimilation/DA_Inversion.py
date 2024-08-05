@@ -2,7 +2,7 @@ import numpy as np
 
 class EKI_transport:
 
-    def __init__(self, forward_operator, gamma, dt, ensemble_size=100, optimization=False, its=None):
+    def __init__(self, forward_operator, gamma, dt, ensemble_size=100, optimization=False, its=None, save_its=False):
         """
         Initialize the 3DVAR class.
         
@@ -19,12 +19,14 @@ class EKI_transport:
         self.dt = dt
         self.optimization = optimization
 
-        if self.optimization:
-            if its is None:
-                raise ValueError("Number of iterations must be provided if optimization is True")
-            self.its = its
-        else:
-            self.its = int(1/self.dt)
+        if its is None:
+            if self.optimization or save_its:
+                raise ValueError("Number of iterations must be provided")
+            else:
+                self.its = int(1/self.dt)
+        
+        self.its = its
+        self.save_its = save_its
 
     def KalmanGain_matmul(self, u, G, innovation):
 
@@ -86,28 +88,44 @@ class EKI_transport:
         """
         EKI_ensemble = ic
 
-        if self.optimization:
+        if self.save_its:
 
-            EKI_sol = np.zeros((ic.shape[0],self.J,2))
+            EKI_sol = np.zeros((ic.shape[0],self.J,self.its))
+            EKI_sol[...,0] = EKI_ensemble
 
             for n in range(self.its):
                 EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
-                if int((n+1)*self.dt) == 1:
-                    EKI_sol[...,0] = EKI_ensemble
+                EKI_sol[...,n+1] = EKI_ensemble
                 print(np.mean(EKI_ensemble), flush=True)
-            EKI_sol[...,1] = EKI_ensemble
 
             return EKI_sol
-        
+
         else:
 
-            EKI_sol = np.zeros((ic.shape[0],self.J))
+            if self.optimization:
 
-            for n in range(self.its):
-                EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
-            EKI_sol = EKI_ensemble
+                EKI_sol = np.zeros((ic.shape[0],self.J,2))
 
-            return EKI_sol
+                for n in range(self.its):
+                    EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
+                    if int((n+1)*self.dt) == 1:
+                        EKI_sol[...,0] = EKI_ensemble
+                    print(np.mean(EKI_ensemble), flush=True)
+                EKI_sol[...,1] = EKI_ensemble
+
+                return EKI_sol
+            
+            else:
+
+                EKI_sol = np.zeros((ic.shape[0],self.J))
+
+                for n in range(self.its):
+                    EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation)
+                EKI_sol = EKI_ensemble
+
+                return EKI_sol
+        
+
 
 
 class EKI_post:
