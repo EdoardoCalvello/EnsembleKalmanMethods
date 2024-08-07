@@ -232,7 +232,7 @@ fig.savefig('./plots/3DVAR_TAU1_predicted_observations_multiscale_001.png')
 sigma = 0.1
 gamma = 0.1
 tau = 0.001
-T = 10
+T = 20
 
 tot_len = int(T/0.001)
 skip_len = int(tau/0.001)
@@ -252,7 +252,7 @@ plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
 ax.set_title('Noisy 3DVAR on singlescale for true model given by Lorenz 96 singlescale', fontsize=30)
 
-fig.savefig('./plots/niosy3DVAR_TAU0.001_predicted_observations_singlescale_1.png')
+fig.savefig('./plots/noisy3DVAR_TAU0.001_predicted_observations_singlescale_1.png')
 
 MSE_3DVAR = 0
 MSE_noisy3DVAR = 0

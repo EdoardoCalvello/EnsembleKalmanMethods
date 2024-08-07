@@ -90,7 +90,7 @@ class EKI_transport:
 
         if self.save_its:
 
-            EKI_sol = np.zeros((ic.shape[0],self.J,self.its))
+            EKI_sol = np.zeros((ic.shape[0],self.J,self.its+1))
             EKI_sol[...,0] = EKI_ensemble
 
             for n in range(self.its):
