@@ -130,7 +130,7 @@ class EKI_transport:
 
 class EKI_post:
 
-    def __init__(self, forward_operator, gamma_R, dt, ensemble_size=100, its=100):
+    def __init__(self, forward_operator, gamma_R, dt, ensemble_size=100, its=100, save_its=False):
         """
         Initialize the 3DVAR class.
         
@@ -146,6 +146,7 @@ class EKI_post:
         self.J = ensemble_size
         self.dt = dt
         self.its = its
+        self.save_its = save_its
 
     def KalmanGain_matmul(self, u, G, innovation):
 
@@ -205,9 +206,23 @@ class EKI_post:
         Returns:
         - x_analysis: np.array, analysis state vector
         """
-        EKI_ensemble = ic
 
-        for n in range(self.its):
-            EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation_R)
+        if self.save_its:
 
-        return EKI_ensemble
+            EKI_sol = np.zeros((ic.shape[0],self.J,self.its+1))
+            EKI_sol[...,0] = ic
+
+            for n in range(self.its):
+                EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation_R)
+                EKI_sol[...,n+1] = EKI_ensemble
+                print(np.mean(EKI_ensemble), flush=True)
+
+            return EKI_sol
+
+        else:   
+            EKI_ensemble = ic
+
+            for n in range(self.its):
+                EKI_ensemble = self.analysis(self.forecast(EKI_ensemble), observation_R)
+
+            return EKI_ensemble
