@@ -8,7 +8,7 @@ import matplotlib.patches as mpatches
 from scipy.integrate import quad
 from scipy.optimize import minimize
 
-'''
+
 #########################################################
 #########################################################
 #############          1D Experiment        ############# 
@@ -80,6 +80,7 @@ axs[0].legend(fontsize=20)
 axs[0].set_xlabel('Position', fontsize=25)
 axs[0].set_title('True Posterior', fontsize=30)
 axs[0].set_xlim([x_min, x_max])
+axs[0].set_ylim([0,3])
 axs[0].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labels size
 
 
@@ -99,19 +100,20 @@ axs[1].set_xlim([x_min, x_max])
 axs[1].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labels size
 
 #axs[2].hist(EKI_post[0,:], weights=np.zeros_like(EKI_post[0,:]) + 1. / EKI_post[0,:].size, bins=30, color='green', label='EKI (Posterior Inflation)')
-axs[2].hist(EKI_post[0,:], density=True, bins=30, color='green', label=r'EKI (Posterior Inflation), $\Delta t=2.5\cdot 10^{-4}$')
+axs[2].hist(EKI_post[0,:], density=True, bins=30, color='green', label=r'EKI (Inflated State), $\Delta t=2.5\cdot 10^{-4}$')
 axs[2].plot(x, posterior(x), 'k-', linewidth=4, label='Posterior')
 axs[2].legend(fontsize=20)
 axs[2].set_xlabel('Position', fontsize=25)
 #axs[2].set_ylabel('Relative Frequency', fontsize=25)
-axs[2].set_title('EKI Posterior Inflation', fontsize=30)
+axs[2].set_title('EKI with Inflated State', fontsize=30)
 axs[2].set_xlim([x_min, x_max])
+axs[2].set_ylim([0,3])
 axs[2].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labels size
 
 plt.tight_layout()
 fig.savefig('./plots/EKI_1D.png')
 
-'''
+
 
 
 #########################################################
@@ -147,6 +149,7 @@ axs[0].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labe
 # Set x-tick labels
 axs[0].set_xticks([1, 2, 3,4,5])
 axs[0].set_xticklabels(['0.1', '0.5', '1', '1.5', '2'], fontsize=20)
+axs[0].set_ylim([5,14])
 
 
 axs[1].boxplot(EKI_transport_one[0,:,[1,2,10,15,20]].T, positions=range(1, 6), widths=0.6, patch_artist=True, 
@@ -165,6 +168,7 @@ axs[1].tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labe
 # Set x-tick labels
 axs[1].set_xticks([1, 2, 3,4,5])
 axs[1].set_xticklabels(['1', '2', '10', '15', '20'], fontsize=20)
+axs[1].set_ylim([5,14])
 
 fig.suptitle('EKI for Optimization: Ensemble Collapse', fontsize=35)
 
@@ -191,7 +195,7 @@ axs.set_title('EKI for Bayesian Inversion', fontsize=35)
 axs.legend(fontsize=20, loc='upper right')
 axs.tick_params(axis='both', which='major', labelsize=20)  # Adjust tick labels size
 axs.set_xticks([1, 2])
-axs.set_xticklabels([r'EKI (Transport), $\Delta t=5\cdot 10^{-2}$', r'EKI (Posterior Inflation), $\Delta t=5\cdot 10^{-2}$'], fontsize=25)
+axs.set_xticklabels([r'EKI (Transport), $\Delta t=5\cdot 10^{-2}$', r'EKI (Inflated State), $\Delta t=5\cdot 10^{-2}$'], fontsize=25)
 
 plt.tight_layout()
 fig.savefig('./plots/EKI_L96s_bayes.png')
