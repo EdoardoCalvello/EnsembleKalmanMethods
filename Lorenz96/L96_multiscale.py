@@ -1,5 +1,14 @@
 import numpy as np
 
+'''
+This code is due to Dmitry Burov and developed for the paper Burov, Giannakis, Manohar and Stuart (2021).
+
+D. Burov, D. Giannakis, K. Manohar and A. Stuart (2021), Kernel analog forecasting:
+Multiscale test problems, Multiscale Modeling & Simulation 19(2), 1011–1040.
+
+'''
+
+
 class L96M:
   """
   A simple class that implements Lorenz '96M model w/ slow and fast variables
