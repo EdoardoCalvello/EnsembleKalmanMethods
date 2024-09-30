@@ -30,7 +30,7 @@ The code contained in the files [./Lorenz96/DATools_.py](./Lorenz96/DATools_.py)
 
 ## Quick Start Guide
 
-The folder [Data_Assimilation](./Data_Assimilation/) contains the DA algorithms used in the paper. Namely, the file [DA_Filtering](./Data_Assimilation/DA_Filtering.py) contains the filtering schemes `ThreeDVAR` and `EnKF`, on the other hand the file [DA_Inversion](./Data_Assimilation/DA_Inversion.py) contains `EKI_transport`, which can be used for both Bayesian inversion and optimization, and `EKI_post` for Bayesian inversion. 
+The folder [Data_Assimilation](./Data_Assimilation/) contains the DA algorithms used in the paper. Namely, the file [DA_Filtering.py](./Data_Assimilation/DA_Filtering.py) contains the filtering schemes `ThreeDVAR` and `EnKF`, on the other hand the file [DA_Inversion.py](./Data_Assimilation/DA_Inversion.py) contains `EKI_transport`, which can be used for both Bayesian inversion and optimization, and `EKI_post` for Bayesian inversion. 
 
 To generate the Lorenz `96 data from the paper, run the python script [data_gen.py](./Lorenz96/data_gen.py) from the [Lorenz96](./Lorenz96/) folder.
 
