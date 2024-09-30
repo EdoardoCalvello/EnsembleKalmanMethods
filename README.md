@@ -1,5 +1,7 @@
 ## Ensemble Kalman Methods
 
+![Alt text](./images/Title_image.png)
+
 Ensemble Kalman methods and numerical experiment from the paper "Ensemble Kalman Methods: A Mean Field Perspective" (https://arxiv.org/abs/2209.11371). To cite this repository use
 
 ```
@@ -25,3 +27,5 @@ The code contained in the files [./Lorenz96/DATools_.py](./Lorenz96/DATools_.py)
   publisher={SIAM}
 } 
 ```
+
+## Quick Start
