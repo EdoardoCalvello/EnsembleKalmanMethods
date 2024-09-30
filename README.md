@@ -11,7 +11,7 @@ Ensemble Kalman methods and numerical experiment from the paper "Ensemble Kalman
 }
 ```
 
-The code contained in the files Lorenz96/DATools_.py and Lorenz96/L96_multiscale.py is due to Dmitry Burov. If using the Lorenz `96 data generation files, please also cite 
+The code contained in the files [./Lorenz96/DATools_.py](./Lorenz96/DATools_.py) and [./Lorenz96/L96_multiscale.py](./Lorenz96/L96_multiscale.py) is due to Dmitry Burov. If using the Lorenz `96 data generation files, please also cite 
 
 ```
 @article{burov2021kernel,
