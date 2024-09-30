@@ -2,7 +2,7 @@
 
 ![Example of application of EnKF on Lorenz `96 state estimation problem](./images/Title_image.png)
 
-Ensemble Kalman methods and numerical experiment from the paper "Ensemble Kalman Methods: A Mean Field Perspective" (https://arxiv.org/abs/2209.11371). To cite this repository use
+Ensemble Kalman methods and numerical experiments from the paper "Ensemble Kalman Methods: A Mean Field Perspective" (https://arxiv.org/abs/2209.11371). To cite this repository use
 
 ```
 @article{Calvello2025Ensemble,
