@@ -6,10 +6,12 @@ Ensemble Kalman methods and numerical experiments from the paper "Ensemble Kalma
 
 ```
 @article{Calvello2025Ensemble,
-  title={Ensemble {K}alman Methods: A Mean Field Perspective},
-  author={Calvello, Edoardo and Reich, Sebastian and Stuart, Andrew M},
+  title={Ensemble Kalman methods: A mean-field perspective},
+  volume={34},
   journal={Acta Numerica},
-  year={2025}
+  author={Calvello, Edoardo and Reich, Sebastian and Stuart, Andrew M.},
+  year={2025},
+  pages={123–291}
 }
 ```
 
