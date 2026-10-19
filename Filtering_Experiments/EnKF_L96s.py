@@ -26,15 +26,20 @@ class Psi:
         self.TAU = TAU
     
     def forward(self, v):
+        # ensure y0 is a 1D numpy float array
+        y0 = np.asarray(v, dtype=float).ravel()
+        try:
+            sol = scint.solve_ivp(
+                l96m.regressed,
+                [0, self.TAU],
+                y0,
+                method='RK45',
+                max_step=self.TAU)
+        except Exception as e:
+            # provide more diagnostics
+            raise RuntimeError(f"solve_ivp failed in Psi.forward; y0.shape={y0.shape}, y0.dtype={y0.dtype}: {e}") from e
 
-        v = scint.solve_ivp(
-        l96m.regressed,
-        [0,self.TAU],
-        v,
-        method = 'RK45',
-        max_step = self.TAU)
-
-        return v.y[:,-1]
+        return sol.y[:, -1]
 
 
 class observation_operator:

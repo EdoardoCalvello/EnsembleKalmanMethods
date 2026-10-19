@@ -1,0 +1,40 @@
+Quick demo total time: 2.4268 seconds
+
+         1171038 function calls in 2.427 seconds
+
+   Ordered by: cumulative time
+   List reduced from 116 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    2.427    2.427 C:\Users\djc\source\repos\EnsembleKalmanMethods\Data_Assimilation\DA_Filtering.py:155(run)
+       99    0.017    0.000    2.389    0.024 C:\Users\djc\source\repos\EnsembleKalmanMethods\Data_Assimilation\DA_Filtering.py:112(forecast)
+     4950    0.021    0.000    2.372    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\Filtering_Experiments\quick_demo.py:39(forward)
+     4950    0.056    0.000    2.340    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\ivp.py:160(solve_ivp)
+     5025    0.008    0.000    1.399    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\base.py:179(step)
+     5025    0.084    0.000    1.391    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\rk.py:111(_step_impl)
+    40050    0.028    0.000    1.241    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\base.py:156(fun)
+     5025    0.302    0.000    1.224    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\rk.py:14(rk_step)
+    40050    0.037    0.000    1.212    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\base.py:23(fun_wrapped)
+    40050    0.482    0.000    1.158    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\Lorenz96\L96_multiscale.py:148(regressed)
+     4950    0.030    0.000    0.803    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\rk.py:85(__init__)
+    40050    0.088    0.000    0.650    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\Lorenz96\L96_multiscale.py:181(simulate)
+     4950    0.084    0.000    0.377    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\common.py:68(select_initial_step)
+    40050    0.135    0.000    0.341    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\Lorenz96\L96_multiscale.py:206(apply_stencil)
+    19875    0.043    0.000    0.174    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\common.py:63(norm)
+    40050    0.134    0.000    0.134    0.000 {method 'outer' of 'numpy.ufunc' objects}
+    40050    0.035    0.000    0.130    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:207(reshape)
+    19875    0.056    0.000    0.128    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\linalg\_linalg.py:2615(norm)
+     4950    0.036    0.000    0.124    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\common.py:44(validate_tol)
+    40050    0.037    0.000    0.094    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:48(_wrapfunc)
+     4950    0.022    0.000    0.094    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\base.py:135(__init__)
+    40050    0.084    0.000    0.084    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\Lorenz96\L96_multiscale.py:134(<lambda>)
+     9900    0.012    0.000    0.082    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:2474(any)
+     5025    0.010    0.000    0.080    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\rk.py:108(_estimate_error_norm)
+    40050    0.073    0.000    0.073    0.000 {built-in method numpy.arange}
+     4950    0.023    0.000    0.072    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\scipy\integrate\_ivp\base.py:5(check_arguments)
+     9900    0.025    0.000    0.070    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:86(_wrapreduction_any_all)
+     4950    0.031    0.000    0.058    0.000 C:\Users\djc\source\repos\EnsembleKalmanMethods\.venv\Lib\site-packages\numpy\_core\shape_base.py:218(vstack)
+    40347    0.048    0.000    0.048    0.000 {method 'reshape' of 'numpy.ndarray' objects}
+    19875    0.042    0.000    0.042    0.000 {method 'dot' of 'numpy.ndarray' objects}
+
+
